@@ -1,13 +1,24 @@
 import {
     ApolloLink,
     Observable,
-    Observer,
     Operation,
     NextLink,
     FetchResult,
 } from 'apollo-link';
 
 import { extractKey } from './extractKey';
+
+export interface Subscription {
+    closed: boolean;
+    unsubscribe(): void;
+}
+
+export interface Observer<T> {
+    start?(subscription: Subscription): any;
+    next?(value: T): void;
+    error?(errorValue: any): void;
+    complete?(): void;
+}
 
 export interface OperationQueueEntry {
     operation: Operation;
